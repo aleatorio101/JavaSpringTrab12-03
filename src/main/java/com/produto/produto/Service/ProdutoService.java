@@ -1,4 +1,4 @@
-package com.produto.produto;
+package com.produto.produto.Service;
 
 import com.produto.produto.Model.Produto;
 import com.produto.produto.Repository.ProdutoRepository;
@@ -28,12 +28,14 @@ public class ProdutoService {
     public Produto atualizarProduto(Produto produtoModel, Long id){
 
         Produto produto = produtoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+                .orElse(new Produto());
 
+        produto.setId(id);
         produto.setNome(produtoModel.getNome());
         produto.setPreco(produtoModel.getPreco());
+        produto.setQuantidadeEmEstoque(produtoModel.getQuantidadeEmEstoque());
+        produto.setStatusProduto(produtoModel.getStatusProduto());
 
         return produtoRepository.save(produto);
-
     }
 }
